@@ -1,0 +1,60 @@
+package ClassDemo;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
+public class ClassDemo {
+	/**
+	 * 打印类的基本信息
+	 */
+	
+	public void print(Object object) {
+		//要获取类的信息，要先获取类的类类型，即参数object的类类型
+		Class class1 = object.getClass();//class1 即是参数object的类类型
+		//用class1 来获取object的基本信息
+		// 1、 获取类的名称并打印
+		System.out.println("类的名称为："+class1.getName());
+	}
+
+	//打印类的方法信息，包括方法返回值，方法名，参数信息
+	public void printClassMethod(Object object) {
+		Class class2 = object.getClass();
+		//2、获取类的方法。类的方法有许多，所以要先用一个数组来存放所获取到的类的方法
+		//获取方法的返回值类型
+		//获取类的所有方法，包括自己声明的和继承而来的方法
+		Method[] methods = class2.getMethods();
+		//获取类自己声明的方法，不包括从父类继承来的方法
+//		Method[] methods2 = class1.getDeclaredMethods();
+		//得到方法的返回值和名称和参数信息
+		for (Method method : methods) {
+			//获取返回值类型
+			Class returnType = method.getReturnType();
+			//获取参数类型
+			Class[] paramType = method.getParameterTypes();
+			for (Class class1 : paramType) {
+				System.out.print("参数信息：");
+				System.out.print(class1.getTypeName()+"  "+class1.getSimpleName()+" ");
+			}
+			System.out.print("方法返回值："+returnType.getName()+" ");
+			System.out.println("方法的名称："+method.getName());
+			
+		}
+	}
+	
+	//打印类的成员变量信息
+	public void printClassConstructor(Object object) {
+		//每次都需先获取类类型
+		Class class3 = object.getClass();
+		//获取构造函数
+		Constructor[] constructors = class3.getDeclaredConstructors();
+		for (Constructor constructor : constructors) {	
+			System.out.println("构造函数的名称："+constructor.getName());
+			Class[] csParam = constructor.getParameterTypes();
+			for (Class class1 : csParam) {
+				System.out.print("构造函数的参数信息: ");
+				System.out.println(class1.getTypeName()+"  "+class1.getSimpleName());
+			}
+		}
+	}
+	
+}
